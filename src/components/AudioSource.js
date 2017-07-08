@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
   View,
-  WebView,
-  PanResponder,
-  TouchableOpacity,
-  DeviceEventEmitter
+  WebView
 } from 'react-native';
-import { NativeModules } from 'react-native';
 
-function getHtml(){
+function getHtml() {
   const html = `
   <!DOCTYPE html>
   <html>
@@ -35,30 +28,29 @@ function getHtml(){
 }
 
 export default class AudioSource extends Component {
-
-  constructor(props, context){
+  constructor(props, context) {
     super(props, context);
   }
 
-  componentWillMount(){
+  componentWillMount() {
 
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
 
   }
 
-  start(){
+  start() {
     this.webWiew.injectJavaScript(`
       sound.play();
     `);
   }
 
-  stop(){
+  stop() {
     this.webWiew.injectJavaScript(`
       sound.pause();
     `);

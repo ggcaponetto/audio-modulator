@@ -14,49 +14,6 @@ import {
 } from 'react-native';
 import AudioSource from './AudioSource';
 
-export default class Main extends Component {
-
-  constructor(props, context){
-    super(props, context);
-    this.state = {
-      isAudioReady: false
-    };
-  }
-
-  componentDidMount(){
-
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Audio Modulator!
-        </Text>
-        <AudioSource
-          ref={(audio) => {
-            this.audio = audio;
-            if(!this.state.isAudioReady){
-              this.setState({
-                isAudioReady: true
-              }, () => { console.log('AudioSource is ready.') })
-            }
-          }}
-        />
-        <TouchableOpacity onPress={() => {
-          this.audio.start()
-        }}>
-          <Text>start</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          this.audio.stop()
-        }}>
-          <Text>stop</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -70,3 +27,47 @@ const styles = StyleSheet.create({
     margin: 10,
   }
 });
+
+export default class Main extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      isAudioReady: false
+    };
+  }
+
+  componentDidMount() {
+
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to Audio Modulator!
+        </Text>
+        <AudioSource
+          ref={(audio) => {
+            this.audio = audio;
+            if (!this.state.isAudioReady) {
+              this.setState({
+                isAudioReady: true
+              }, () => { console.log('AudioSource is ready.'); });
+            }
+          }}
+        />
+        <TouchableOpacity onPress={() => {
+          this.audio.start();
+        }}
+        >
+          <Text>start</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          this.audio.stop();
+        }}
+        >
+          <Text>stop</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
