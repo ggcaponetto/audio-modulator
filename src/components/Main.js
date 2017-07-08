@@ -31,9 +31,6 @@ const styles = StyleSheet.create({
 export default class Main extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      isAudioReady: false
-    };
   }
 
   componentDidMount() {
@@ -48,11 +45,9 @@ export default class Main extends Component {
         <AudioSource
           ref={(audio) => {
             this.audio = audio;
-            if (!this.state.isAudioReady) {
-              this.setState({
-                isAudioReady: true
-              }, () => { console.log('AudioSource is ready.'); });
-            }
+          }}
+          onReady={() => {
+            console.log('AudioSource is ready.');
           }}
         />
         <TouchableOpacity onPress={() => {
