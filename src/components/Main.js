@@ -13,6 +13,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import AudioSource from './AudioSource';
+import Sensors from './Sensors';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,6 +49,11 @@ export default class Main extends Component {
           }}
           onReady={() => {
             console.log('AudioSource is ready.');
+          }}
+        />
+        <Sensors
+          onUpdate={(data) => {
+            console.log('Sensor data updated: ', data);
           }}
         />
         <TouchableOpacity onPress={() => {
