@@ -53,7 +53,11 @@ export default class Main extends Component {
         />
         <Sensors
           onUpdate={(data) => {
-            console.log('Sensor data updated: ', data);
+            // console.log('Sensor data updated: ', data);
+            // console.log('Sensor data updated (orientation): ', JSON.stringify(data.orientation));
+            // console.log('Sensor data updated (accelerometer): ', JSON.stringify(data.accelerometer));
+            // console.log('Sensor data updated (gyroscope): ', JSON.stringify(data.gyroscope));
+            // console.log('Sensor data updated (light): ', JSON.stringify(data.light));
           }}
         />
         <TouchableOpacity onPress={() => {
@@ -66,7 +70,7 @@ export default class Main extends Component {
           this.audio.stop();
         }}
         >
-          <Text>stop</Text>
+          <Text style={{ marginTop: 100 }}>stop</Text>
         </TouchableOpacity>
       </View>
     );

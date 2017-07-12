@@ -67,9 +67,6 @@ export default class AudioSource extends Component {
         <WebView
           ref={(c) => {
             this.webWiew = c;
-          }}
-          onLoad={() => {
-            console.log('AudioSource\'s webWiew loaded.');
             this.props.onReady();
           }}
           allowsInlineMediaPlayback
