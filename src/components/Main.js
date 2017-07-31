@@ -10,7 +10,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 import Sensors from './Sensors';
 
@@ -33,12 +34,14 @@ export default class Main extends Component {
     super(props, context);
     this.state = {
       isMounted: false,
-      ws: null
+      ws: null,
+      target: null
     };
   }
 
   componentDidMount() {
-    const host = 'wss://murmuring-dusk-99045.herokuapp.com';
+    // const host = 'wss://murmuring-dusk-99045.herokuapp.com';
+    const host = 'ws://192.168.200.57:5000';
     // eslint-disable-next-line no-undef
     const ws = new WebSocket(host);
     ws.onopen = () => {
@@ -73,24 +76,52 @@ export default class Main extends Component {
           onUpdate={(data) => {
             // console.log('Sensor data updated: ', data);
             // console.log('Sensor data updated (orientation): ', JSON.stringify(data.orientation));
-            // eslint-disable-next-line max-len
+            // eslint-disable-next-line
             // console.log('Sensor data updated (accelerometer): ', JSON.stringify(data.accelerometer));
             // console.log('Sensor data updated (gyroscope): ', JSON.stringify(data.gyroscope));
             // console.log('Sensor data updated (light): ', JSON.stringify(data.light));
           }}
         /> */}
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={text => this.setState({ target: text })}
+          value={this.state.target}
+        />
         <TouchableOpacity
           onPress={() => {
             if (this.state.isMounted && this.state.ws) {
-              console.log('Websocket testing midi message');
-              const message = { type: 'audiomodulator', payload: {} };
+              console.log('Websocket testing midi message (broadcast)');
+              const message = {
+                type: 'audiomodulator',
+                payload: {},
+                target: 'broadcast'
+              };
+              console.log('Sending: ', message);
               this.state.ws.send(JSON.stringify(message), () => {});
             } else {
               console.log('Websocket is not ready to send midi message.');
             }
           }}
         >
-          <Text style={{ fontSize: 24 }}>Send test</Text>
+          <Text style={{ fontSize: 24 }}>Send test (broadcast)</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            if (this.state.isMounted && this.state.ws) {
+              console.log('Websocket testing midi message (single)');
+              const message = {
+                type: 'audiomodulator',
+                payload: {},
+                target: this.state.target
+              };
+              console.log('Sending: ', message);
+              this.state.ws.send(JSON.stringify(message), () => {});
+            } else {
+              console.log('Websocket is not ready to send midi message.');
+            }
+          }}
+        >
+          <Text style={{ fontSize: 24 }}>Send test single target</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
