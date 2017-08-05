@@ -90,11 +90,16 @@ export default class Main extends Component {
         <TouchableOpacity
           onPress={() => {
             if (this.state.isMounted && this.state.ws) {
-              console.log('Websocket testing midi message (broadcast)');
+              console.log('Websocket is pairing midi device');
               const message = {
-                type: 'audiomodulator',
-                payload: {},
-                target: 'broadcast'
+                type: 'pairing',
+                ts: {
+                  clientTS: Date.now()
+                },
+                payload: {
+                  targetId: parseInt(this.state.target, 10),
+                  obj: { }
+                }
               };
               console.log('Sending: ', message);
               this.state.ws.send(JSON.stringify(message), () => {});
@@ -103,7 +108,7 @@ export default class Main extends Component {
             }
           }}
         >
-          <Text style={{ fontSize: 24 }}>Send test (broadcast)</Text>
+          <Text style={{ fontSize: 24 }}>Pair device</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -111,8 +116,13 @@ export default class Main extends Component {
               console.log('Websocket testing midi message (single)');
               const message = {
                 type: 'audiomodulator',
-                payload: {},
-                target: this.state.target
+                ts: {
+                  clientTS: Date.now()
+                },
+                payload: {
+                  targetId: parseInt(this.state.target, 10),
+                  obj: { }
+                }
               };
               console.log('Sending: ', message);
               this.state.ws.send(JSON.stringify(message), () => {});
@@ -121,14 +131,7 @@ export default class Main extends Component {
             }
           }}
         >
-          <Text style={{ fontSize: 24 }}>Send test single target</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log('Button test');
-          }}
-        >
-          <Text style={{ fontSize: 24 }}>Button test</Text>
+          <Text style={{ fontSize: 24 }}>Send to paired target</Text>
         </TouchableOpacity>
       </View>
     );
