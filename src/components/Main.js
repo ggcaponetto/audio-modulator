@@ -11,7 +11,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 import Sensors from './Sensors';
 
@@ -52,6 +53,17 @@ export default class Main extends Component {
     ws.onmessage = (e) => {
       // a message was received
       console.log(e.data);
+      const data = JSON.parse(e.data);
+      if (data.type === 'error') {
+        Alert.alert(
+          'MIDI Pairing',
+          'Pairing number has already been used, please refresh your browser.',
+          [
+            { text: 'Got it', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: false }
+        );
+      }
     };
 
     ws.onerror = (e) => {
@@ -121,7 +133,7 @@ export default class Main extends Component {
                 },
                 payload: {
                   targetId: parseInt(this.state.target, 10),
-                  obj: { }
+                  obj: [0x90, 0x35, 0x7f]
                 }
               };
               console.log('Sending: ', message);
