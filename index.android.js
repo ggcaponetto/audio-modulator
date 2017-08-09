@@ -11,12 +11,13 @@ import {
   Text,
   View
 } from 'react-native';
-import Main from './src/components/Main';
+// eslint-disable-next-line
+import AudioModulatorApp from './src/components/AudioModulatorApp';
 
 export default class AudioModulator extends Component {
   render() {
     return (
-      <Main></Main>
+      <AudioModulatorApp />
     );
   }
 }
