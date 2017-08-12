@@ -15,7 +15,7 @@ import {
   Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';

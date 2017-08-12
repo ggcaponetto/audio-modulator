@@ -91,16 +91,6 @@ export default class Settings extends Component {
         <Text style={styles.welcome}>
           Welcome to Audio Modulator!
         </Text>
-        {/* <Sensors
-          onUpdate={(data) => {
-            // console.log('Sensor data updated: ', data);
-            // console.log('Sensor data updated (orientation): ', JSON.stringify(data.orientation));
-            // eslint-disable-next-line
-            // console.log('Sensor data updated (accelerometer): ', JSON.stringify(data.accelerometer));
-            // console.log('Sensor data updated (gyroscope): ', JSON.stringify(data.gyroscope));
-            // console.log('Sensor data updated (light): ', JSON.stringify(data.light));
-          }}
-        /> */}
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
           onChangeText={text => this.setState({ target: text })}

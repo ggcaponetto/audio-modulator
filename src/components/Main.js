@@ -14,9 +14,22 @@ import {
   TextInput,
   Alert
 } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
+import PropTypes from 'prop-types';
 import Sensors from './Sensors';
+import Menu from './Menu';
+
+import Gravity from './modules/Gravity';
 import config from '../config/config';
+
+const ModalStack = StackNavigator({
+  Menu: {
+    screen: Menu
+  },
+  Gravity: {
+    screen: Gravity
+  }
+});
 
 export default class Main extends Component {
   constructor(props, context) {
@@ -25,12 +38,21 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-
+    console.log('Main -> componentDidMount:', { state: this.state, props: this.props });
   }
 
   render() {
     return (
-      <View><Text>main</Text></View>
+      <ModalStack screenProps={{
+        EntryPoint: {
+          screenProps: this.props.screenProps
+        }
+      }}
+      />
     );
   }
 }
+
+Main.propTypes = {
+  screenProps: PropTypes.object.isRequired
+};

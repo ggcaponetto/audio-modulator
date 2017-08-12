@@ -26,6 +26,7 @@ export default class Sensors extends Component {
   }
 
   componentDidMount() {
+    console.log('Sensors -> componentDidMount', { state: this.state, props: this.props });
     DeviceEventEmitter.addListener('Accelerometer', (data) => {
       this.setState({
         accelerometer: data
@@ -79,6 +80,6 @@ Sensors.propTypes = {
   onUpdate: PropTypes.func
 };
 Sensors.defaultProps = {
-  updateDelta: 50,
+  updateDelta: 2000,
   onUpdate: () => {}
 };
