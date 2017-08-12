@@ -83,6 +83,10 @@ export default class EntryPoint extends Component {
 }
 
 EntryPoint.propTypes = {
-  ws: PropTypes.any.isRequired,
+  ws: PropTypes.any,
   updateWS: PropTypes.func.isRequired
+};
+
+EntryPoint.defaultProps = {
+  ws: null
 };

@@ -1,8 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+/* eslint-env browser */
 
 import React, { Component } from 'react';
 import {
@@ -37,51 +33,57 @@ export default class Settings extends Component {
     super(props, context);
     this.state = {
       isMounted: false,
-      ws: null,
-      target: null
+      isWSReady: false,
+      target: null,
+      ws: null
     };
   }
 
   componentDidMount() {
-    // const host = 'wss://murmuring-dusk-99045.herokuapp.com';
     const host = config.WS_HOST;
-    // eslint-disable-next-line no-undef
-    const ws = new WebSocket(host);
-    ws.onopen = () => {
-      // connection opened
-      console.log(`Connection opened to ${host}`);
-    };
+    let ws = null;
+    if (!this.props.screenProps.ws) {
+      console.log('Settings -> componentDidMount -> creating a new WebSocket');
+      ws = new WebSocket(host);
+      ws.onopen = () => {
+        // connection opened
+        console.log(`Connection opened to ${host}`);
+      };
 
-    ws.onmessage = (e) => {
-      // a message was received
-      console.log(e.data);
-      const data = JSON.parse(e.data);
-      if (data.type === 'error') {
-        Alert.alert(
-          'MIDI Pairing',
-          'Pairing number has already been used, please refresh your browser.',
-          [
-            { text: 'Got it', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: false }
-        );
-      }
-    };
+      ws.onmessage = (e) => {
+        // a message was received
+        console.log(e.data);
+        const data = JSON.parse(e.data);
+        if (data.type === 'error') {
+          Alert.alert(
+            'MIDI Pairing',
+            'Pairing number has already been used, please refresh your browser.',
+            [
+              { text: 'Got it', onPress: () => console.log('OK Pressed') },
+            ],
+            { cancelable: false }
+          );
+        }
+      };
 
-    ws.onerror = (e) => {
-      // an error occurred
-      console.log(e.message);
-    };
+      ws.onerror = (e) => {
+        // an error occurred
+        console.log(e.message);
+      };
 
-    ws.onclose = (e) => {
-      // connection closed
-      console.log(e.code, e.reason);
-    };
-    this.state.isMounted = true;
+      ws.onclose = (e) => {
+        // connection closed
+        console.log(e.code, e.reason);
+      };
+      console.log('Settings -> componentDidMount -> redux:updateWS');
+      this.props.screenProps.updateWS(ws);
+    } else {
+      console.log('Settings -> componentDidMount -> using WebSocket stored in redux');
+      ws = this.props.screenProps.ws;
+    }
     this.state.ws = ws;
-
-    console.log('Updating ws in redux.');
-    this.props.screenProps.updateWS(ws);
+    this.state.isMounted = true;
+    console.log('Settings -> componentDidMount:', this.state);
   }
   render() {
     return (
