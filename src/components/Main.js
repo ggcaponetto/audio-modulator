@@ -20,6 +20,7 @@ import Sensors from './Sensors';
 import Menu from './Menu';
 
 import Gravity from './modules/Gravity';
+import BGrid from './modules/BGrid';
 import config from '../config/config';
 
 const ModalStack = StackNavigator({
@@ -28,6 +29,9 @@ const ModalStack = StackNavigator({
   },
   Gravity: {
     screen: Gravity
+  },
+  BGrid: {
+    screen: BGrid
   }
 });
 

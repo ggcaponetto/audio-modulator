@@ -35,14 +35,14 @@ export default class Menu extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
         <TouchableOpacity
           onPress={() => {
             console.log('Menu -> onPress:', { state: this.state, props: this.props });
-            this.props.navigation.navigate('Gravity');
+            this.props.navigation.navigate('BGrid');
           }}
         >
-          <Text>Gravity</Text>
+          <Text style={{ fontSize: 18, textAlign: 'center' }}>BGrid</Text>
         </TouchableOpacity>
       </View>
     );

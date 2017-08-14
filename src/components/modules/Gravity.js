@@ -11,7 +11,7 @@ import {
   Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
-import Sensors from '../Sensors';
+import SensorsBasic from '../SensorsBasic';
 import config from '../../config/config';
 
 export default class Gravity extends Component {
@@ -33,7 +33,7 @@ export default class Gravity extends Component {
     return (
       <View style={{}}>
         <Text>Gravity module</Text>
-        <Sensors
+        <SensorsBasic
           updateDelta={2000}
           onUpdate={(data) => {
             // console.log('Sensor data updated: ', data);

@@ -17,8 +17,10 @@ export default class Sensors extends Component {
       accelerometer: null,
       gyroscope: null,
       light: null,
-      orientation: null
+      orientation: null,
+      lastUpdateTS: Date.now()
     };
+    this.notifyUpdate = this.notifyUpdate.bind(this);
   }
 
   componentWillMount() {
@@ -30,25 +32,33 @@ export default class Sensors extends Component {
     DeviceEventEmitter.addListener('Accelerometer', (data) => {
       this.setState({
         accelerometer: data
-      }, this.props.onUpdate(this.state));
+      }, () => {
+        this.notifyUpdate(this.state);
+      });
     });
 
     DeviceEventEmitter.addListener('Gyroscope', (data) => {
       this.setState({
         gyroscope: data
-      }, this.props.onUpdate(this.state));
+      }, () => {
+        this.notifyUpdate(this.state);
+      });
     });
 
     DeviceEventEmitter.addListener('LightSensor', (data) => {
       this.setState({
         light: data
-      }, this.props.onUpdate(this.state));
+      }, () => {
+        this.notifyUpdate(this.state);
+      });
     });
 
     DeviceEventEmitter.addListener('Orientation', (data) => {
       this.setState({
         orientation: data
-      }, this.props.onUpdate(this.state));
+      }, () => {
+        this.notifyUpdate(this.state);
+      });
     });
 
     try {
@@ -66,6 +76,18 @@ export default class Sensors extends Component {
     SensorManager.stopGyroscope();
     SensorManager.stopLightSensor();
     SensorManager.stopOrientation();
+  }
+
+  notifyUpdate(data) {
+    // console.log('Sensors -> notifyUpdate -> ', {
+    //   lastUpdateTS: this.state.lastUpdateTS,
+    //   now: Date.now(),
+    //   delta: Date.now() - this.state.lastUpdateTS }
+    // );
+    if (Date.now() - this.state.lastUpdateTS >= this.props.updateDelta) {
+      this.props.onUpdate(data);
+      this.setState({ lastUpdateTS: Date.now() });
+    }
   }
 
   render() {
